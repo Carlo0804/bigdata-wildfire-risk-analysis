@@ -1,0 +1,55 @@
+-- RBAC Setup — Control de Acceso Basado en Roles
+-- Proyecto: incendios-500902 | Dataset: eft_rbac
+
+-- PASO 1: Verificar que la cuenta básica no tenga rol amplio
+-- (ejecutar en Cloud Shell)
+-- gcloud projects get-iam-policy incendios-500902 \
+--   --flatten="bindings[].members" \
+--   --format="table(bindings.role,bindings.members)" \
+--   --filter="bindings.members:carlitrox0804@gmail.com"
+
+-- PASO 2: Asignar dataViewer por tabla al Usuario Básico
+-- (ejecutar en Cloud Shell)
+-- bq add-iam-policy-binding \
+--   --member='user:carlitrox0804@gmail.com' \
+--   --role='roles/bigquery.dataViewer' \
+--   --table=true \
+--   incendios-500902:eft_rbac.fact_alerta_posta
+--
+-- bq add-iam-policy-binding \
+--   --member='user:carlitrox0804@gmail.com' \
+--   --role='roles/bigquery.dataViewer' \
+--   --table=true \
+--   incendios-500902:eft_rbac.fact_clima
+--
+-- bq add-iam-policy-binding \
+--   --member='user:carlitrox0804@gmail.com' \
+--   --role='roles/bigquery.dataViewer' \
+--   --table=true \
+--   incendios-500902:eft_rbac.fact_riesgo_climatico
+--
+-- bq add-iam-policy-binding \
+--   --member='user:carlitrox0804@gmail.com' \
+--   --role='roles/bigquery.dataViewer' \
+--   --table=true \
+--   incendios-500902:eft_rbac.fact_incendio_activo_clima
+
+-- PASO 3: Permisos mínimos de proyecto
+-- gcloud projects add-iam-policy-binding incendios-500902 \
+--   --member="user:carlitrox0804@gmail.com" \
+--   --role="roles/bigquery.jobUser"
+--
+-- gcloud projects add-iam-policy-binding incendios-500902 \
+--   --member="user:carlitrox0804@gmail.com" \
+--   --role="roles/browser"
+
+-- PASO 4: Pruebas de verificación
+-- Administrador (debe funcionar):
+--   SELECT COUNT(*) FROM `incendios-500902.eft_rbac.dim_posta`;
+--   CREATE OR REPLACE TABLE eft_rbac.test_admin AS SELECT 'ok' AS msg;
+--
+-- Usuario Básico (debe funcionar):
+--   SELECT COUNT(*) FROM `incendios-500902.eft_rbac.fact_alerta_posta`;
+--
+-- Usuario Básico (debe dar 403):
+--   SELECT COUNT(*) FROM `incendios-500902.eft_rbac.dim_posta`;
