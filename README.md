@@ -31,7 +31,7 @@ Se diseñó una arquitectura Big Data basada en Google Cloud Platform que permit
 
 ## Arquitectura
 
-![Arquitectura](architecture/arquitectura_general.png)
+![Arquitectura](architecture/Arquitectura.png.png)
 
 ---
 
