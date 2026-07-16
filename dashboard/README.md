@@ -3,7 +3,7 @@
 El dashboard interactivo del proyecto está disponible en Looker Studio.
 
 ## Acceso
-[Ver Dashboard en Looker Studio](#) ← reemplaza con tu link real
+[Ver Dashboard en Looker Studio](https://datastudio.google.com/u/0/reporting/177e33ad-6890-4842-a89d-2769f8ed4655/page/8ab2F) 
 
 ## Contenido del dashboard
 
